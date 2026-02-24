@@ -1,30 +1,19 @@
-name: Auto-Activate License
+name: Get ALF File
 on: workflow_dispatch
 jobs:
-  activation:
+  get-alf:
     runs-on: ubuntu-latest
-    container:
-      image: unityci/editor:ubuntu-2022.3.12f1-base-3
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Generate and Activate
-        id: activate
-        run: |
-          # 1. Generate the ALF file
-          /opt/unity/Editor/Unity -batchmode -nographics -createManualActivationFile -logfile /dev/stdout || true
-          ALF_FILE=$(ls *.alf)
-          
-          # 2. Use the Unity Editor to log in and get the license
-          # This uses the credentials you put in your Secrets
-          /opt/unity/Editor/Unity -batchmode -nographics -login -username "${{ secrets.UNITY_EMAIL }}" -password "${{ secrets.UNITY_PASSWORD }}" -logfile /dev/stdout || true
-          
-          # 3. Grab the generated license file
-          # Usually located in /root/.local/share/unity3d/Unity/Unity_lic.ulf
-          echo "license_content=$(cat /root/.local/share/unity3d/Unity/Unity_lic.ulf)" >> $GITHUB_OUTPUT
-        continue-on-error: true
+      - name: Generate ALF
+        uses: game-ci/unity-request-activation-file@main
+        with:
+          unityVersion: 2022.3.12f1
 
-      - name: Display License
-        run: |
-          cat /root/.local/share/unity3d/Unity/Unity_lic.ulf
+      - name: Upload ALF
+        uses: actions/upload-artifact@v4
+        with:
+          name: manual-activation-file
+          path: ./*.alf
