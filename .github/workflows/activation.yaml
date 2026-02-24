@@ -1,7 +1,9 @@
-name: Get ALF File
-on: workflow_dispatch
+name: Acquire activation file
+on:
+  workflow_dispatch: {}
 jobs:
-  get-alf:
+  activation:
+    name: Request manual activation file 🔑
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -14,5 +16,5 @@ jobs:
       - name: Expose as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: manual-activation-file
+          name: ${{ steps.getManualLicenseFile.outputs.filePath }}
           path: ${{ steps.getManualLicenseFile.outputs.filePath }}
