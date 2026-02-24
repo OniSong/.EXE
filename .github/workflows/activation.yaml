@@ -3,7 +3,7 @@ on:
   workflow_dispatch: {}
 jobs:
   activation:
-    name: Request manual activation file 🔑
+    name: Request manual activation file
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -16,5 +16,5 @@ jobs:
       - name: Expose as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ steps.getManualLicenseFile.outputs.filePath }}
+          name: activation-file
           path: ${{ steps.getManualLicenseFile.outputs.filePath }}
