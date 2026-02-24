@@ -4,14 +4,14 @@ jobs:
   get-alf:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Request ALF
+      - name: Request manual activation file
         id: getManualLicenseFile
-        uses: game-ci/unity-request-activation-file@main
+        uses: game-ci/unity-request-activation-file@v2
 
-      - name: Upload ALF
+      - name: Expose as artifact
         uses: actions/upload-artifact@v4
         with:
           name: manual-activation-file
