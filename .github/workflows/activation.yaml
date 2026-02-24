@@ -1,0 +1,19 @@
+name: Get Unity License
+on: workflow_dispatch
+jobs:
+  activation:
+    name: Request manual activation file (.alf)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Request manual activation file
+        uses: webbertakken/unity-activate@v2
+        with:
+          unityVersion: 2022.3.12f1
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: activation-file
+          path: ./*.alf
+          
