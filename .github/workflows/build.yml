@@ -1,9 +1,9 @@
-name: Build Project 🚀
+name: Build Project
 on: workflow_dispatch
 
 jobs:
   build:
-    name: Build for Windows 🪟
+    name: Build for Windows
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -27,6 +27,7 @@ jobs:
           targetPlatform: StandaloneWindows64
           projectPath: .
           unityVersion: 2022.3.12f1
+          # Resolution and Batchmode to prevent headless crashes
           customParameters: -screen-width 1920 -screen-height 1080 -screen-fullscreen 1 -batchmode -nographics
 
       - name: Upload Build Artifact
